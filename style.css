@@ -1,0 +1,234 @@
+/* ===== style.css ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #fef6f9, #fdeef4, #fce4ec);
+  font-family: "JetBrains Mono", monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ----- MAIN CONFESSION TERMINAL ----- */
+.container {
+  width: 95%;
+  max-width: 1000px;
+  position: relative;
+  z-index: 20;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.window-header {
+  background: linear-gradient(135deg, #ffa6c1, #ff8fb5);
+  border-radius: 12px 12px 0 0;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  opacity: 0.8;
+  transition: transform 0.3s ease;
+}
+
+.dot:hover { transform: scale(1.2); }
+
+.window-title {
+  font-family: 'Crimson Pro', serif;
+  color: white;
+  font-size: 15px;
+  margin-left: auto;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.terminal {
+  background: white;
+  border-radius: 0 0 12px 12px;
+  padding: 50px 45px;
+  box-shadow: 0 20px 60px rgba(255, 166, 193, 0.25);
+  color: #7d5a6e;
+  line-height: 1.8;
+  font-size: 16px;
+  min-height: 600px;
+}
+
+.output {
+  min-height: 500px;
+  white-space: pre-wrap;
+  margin: 0;
+  padding: 0;
+}
+
+/* Terminal text styles */
+.prompt { color: #ffa6c1; font-weight: 700; }
+.command { color: #d47b96; font-weight: 600; }
+.success { color: #88c999; font-weight: 600; }
+.warning { color: #ff9eb5; font-weight: 600; }
+.comment { color: #b8a0ab; font-style: italic; }
+.emphasis {
+  font-family: 'Crimson Pro', serif;
+  font-size: 18px;
+  color: #a85d7a;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.divider {
+  margin: 20px 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #ffa6c1, transparent);
+  opacity: 0.3;
+}
+
+.buttons {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+button {
+  background: white;
+  border: 2px solid #ffa6c1;
+  color: #d47b96;
+  padding: 13px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  letter-spacing: 0.3px;
+  position: relative;
+}
+
+button:hover {
+  background: #ffa6c1;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 166, 193, 0.3);
+}
+
+button.yes-btn {
+  background: #ffa6c1;
+  color: white;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* background floating hearts - only for confession part, not landing */
+.bg-heart {
+  position: fixed;
+  font-size: 30px;
+  opacity: 0.1;
+  color: #ffa6c1;
+  pointer-events: none;
+  animation: drift 22s infinite ease-in-out;
+  z-index: 1;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-30px) rotate(10deg); }
+}
+
+.heart-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.floating-heart {
+  position: absolute;
+  font-size: 20px;
+  opacity: 0;
+  animation: floatUp 4s ease-in forwards;
+}
+
+@keyframes floatUp {
+  0% { opacity: 0; transform: translateY(0) scale(0.5); }
+  10% { opacity: 0.9; }
+  90% { opacity: 0.9; }
+  100% { opacity: 0; transform: translateY(-100vh) scale(1.2); }
+}
+
+/* ===== FULLY MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .terminal {
+    padding: 35px 28px;
+    font-size: 15px;
+    min-height: 500px;
+  }
+  .output {
+    min-height: 400px;
+  }
+  button {
+    padding: 12px 22px;
+    font-size: 13.5px;
+  }
+}
+
+@media (max-width: 600px) {
+  .terminal {
+    padding: 28px 22px;
+    font-size: 14px;
+    min-height: 450px;
+  }
+  .output {
+    min-height: 350px;
+  }
+  button {
+    padding: 11px 20px;
+    font-size: 13px;
+    width: 100%;
+  }
+  .buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .emphasis {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .window-title {
+    font-size: 13px;
+  }
+  .terminal {
+    padding: 22px 18px;
+    font-size: 13px;
+  }
+  .output {
+    min-height: 300px;
+  }
+}

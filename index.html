@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"/>
+  <title>initializing... ♡</title>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ----- SIMPLE PINK LANDING PAGE – ONLY INITIALIZING, NO HEART ANIMATIONS ----- */
+    .boot-pink {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #ffd0d6;  /* soft, clean pink */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+      padding: 20px;
+    }
+    .boot-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-align: center;
+      width: 100%;
+    }
+    .boot-text {
+      font-size: clamp(36px, 12vw, 64px);
+      font-weight: 700;
+      font-style: italic;
+      font-family: 'Crimson Pro', serif;
+      color: #8f3b4a;
+      letter-spacing: 4px;
+      line-height: 1.2;
+      word-break: break-word;
+      text-shadow: 2px 2px 0 rgba(255, 220, 240, 0.5);
+    }
+    .boot-dots {
+      font-size: clamp(36px, 12vw, 64px);
+      font-weight: 700;
+      font-style: italic;
+      font-family: 'Crimson Pro', serif;
+      color: #8f3b4a;
+      display: inline-block;
+      letter-spacing: 8px;
+    }
+    .boot-pink.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 💗 SIMPLE PINK LANDING PAGE – JUST "initializing..." – NO HEARTS, NO EXTRA EMOJIS -->
+  <div id="bootOverlay" class="boot-pink">
+    <div class="boot-content">
+      <span class="boot-text">initializing</span>
+      <span class="boot-dots">...</span>
+    </div>
+  </div>
+
+  <!-- 🖥️ MAIN CONFESSION TERMINAL -->
+  <div class="container" id="mainContainer">
+    <div class="window-header">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="window-title">confession.dev ~ ♡</div>
+    </div>
+    <div class="terminal">
+      <div class="output" id="output"></div>
+      <div class="buttons" id="buttons"></div>
+    </div>
+  </div>
+
+  <div class="heart-container" id="heartContainer"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
