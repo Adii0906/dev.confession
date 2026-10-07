@@ -1,140 +1,90 @@
-# Dev Confession 💝
+# a tiny confession 💌
 
-A creative, developer-themed confession page to ask out a fellow developer. Built with vanilla HTML, CSS, and JavaScript.
+A small, interactive website for telling someone you like them.
+It's meant to be cute, a little funny, and easy to say no to.
 
-## 🎯 Features
+Plain HTML, CSS and JavaScript. No frameworks, no build step, no tracking.
 
-- **Developer-themed confession** - Git commands, terminal aesthetics, relatable dev culture
-- **Smart "no" handling** - Playful responses that aren't desperate, just clever
-- **Beautiful UI** - Soft pink gradient, floating hearts, smooth animations
-- **Contact form** - Captures her response when she says yes
-- **Mobile responsive** - Works perfectly on all devices
-- **Zero dependencies** - Pure vanilla JS, no frameworks needed
+## The flow
 
-## 🚀 Quick Start
+1. **The hook.** *"So… I made you a website."* One button: *Okay… I'm curious 👀*
+2. **The setup.** He admits he's been trying to say something. Then he asks a favour: **hold the heart so I don't chicken out**. While she holds it, his "confidence" meter climbs and the page slowly blushes. If she lets go too early, it drains and he panics a little.
+3. **The confession.** *"I like you."*, then a short, honest note, revealed line by line. Tap to skip ahead.
+4. **The question.** Coffee, sometime? There are three answers, all the same size: **Yes**, **Let me think**, **I don't think so**.
+5. **The ending.**
+   - **Yes:** little hearts fly up and gather into one big heart, it beats once, and she gets a date "ticket" stamped *it's a date*.
+   - **Maybe:** no rush, no timer.
+   - **No:** the page calms to lavender. It thanks her for being honest and tells her she doesn't owe a reply.
 
-### Local Testing
+The site never sends her answer anywhere, and it tells her so. On a yes, it asks her to send you a ☕.
 
-1. Clone or download this repository
-2. Open `index.html` in your browser
-3. That's it! No build process needed.
+## Make it yours
 
-### Deploy to Vercel
+Open `script.js`. Everything at the top is optional:
 
-1. Install Vercel CLI (if you haven't):
-   ```bash
-   npm install -g vercel
-   ```
+```js
+const CONFIG = {
+  to: "",          // her name, e.g. "Riya". empty = "for you 💌"
+  from: "",        // your name for the ticket. empty = "me"
+  plan: "coffee",  // something you "grab": coffee, chai, boba, ice cream, dinner…
+  planEmoji: "☕",
+  extraLine: "",   // one line only you could write
+  replyLink: "",   // optional one-tap reply link (WhatsApp, Instagram DM…)
+};
+```
 
-2. Deploy:
-   ```bash
-   cd dev-confession
-   vercel
-   ```
+`extraLine` is what makes it feel like it was written for *her*, so take a minute on it. Keep it specific and light, e.g. `"Also, your laugh is honestly unfair."`.
 
-3. Follow the prompts and get your live URL!
+## Run it locally
 
-**OR** use Vercel's web interface:
-1. Go to [vercel.com](https://vercel.com)
-2. Click "Add New" → "Project"
-3. Import your Git repository or drag & drop the folder
-4. Deploy! 🎉
+Open `index.html` in a browser. That's it.
 
-### Deploy to Netlify
+To test it on your phone, serve the folder and open it from your phone on the same Wi-Fi:
 
-1. Drag and drop the `dev-confession` folder to [Netlify Drop](https://app.netlify.com/drop)
-2. Get your live URL instantly!
-
-**OR** use Netlify CLI:
 ```bash
-npm install -g netlify-cli
-cd dev-confession
-netlify deploy --prod
+npx serve .          # or: python3 -m http.server 8080
 ```
 
-## 📁 Project Structure
+## Deploy
+
+Any static host works.
+
+- **Vercel:** `npx vercel` in this folder, or import the repo at vercel.com.
+- **Netlify:** drag the folder onto [app.netlify.com/drop](https://app.netlify.com/drop).
+- **GitHub Pages:** Settings → Pages → deploy from `main`.
+
+### A nicer link preview
+
+`og-image.jpg` is the card that shows up when the link is pasted into a chat. Link previews need an absolute URL. After deploying, uncomment the `og:image` line in `index.html` and put your real URL in it.
+
+## Little details
+
+- Works with touch, mouse or keyboard. Hold **Space/Enter** on the heart. Tapping fast also works, so nobody gets stuck.
+- Respects **reduced motion**: same story, no floating or flying things.
+- Still readable with **JavaScript off**: it shows the whole thing as a simple letter.
+- `noindex`, so it won't show up in search results.
+- Fonts: Fraunces, DM Sans and Caveat from Google Fonts, with good system fallbacks.
+
+<details>
+<summary>Easter eggs (spoilers)</summary>
+
+- Tap the ♥ in the footer. It shows a different dev joke on every screen (`git commit -m "finally told her"`, `git stash`, `exit 0`…).
+- Switch tabs mid-story and check the tab title.
+- Let go of the heart early a few times. You'll get `404: courage not found`.
+- Open devtools, or view the page source.
+- Visit any page that doesn't exist.
+
+</details>
+
+## Files
 
 ```
-dev-confession/
-├── index.html          # Main HTML structure
-├── style.css           # All styling (pink theme, animations)
-├── script.js           # Logic and flow
-└── README.md           # This file
+index.html     the story (every screen is right there in the HTML)
+style.css      the look + all the CSS animations
+script.js      scene flow, the hold-the-heart bit, the heart animation
+favicon.svg
+og-image.jpg   link preview card
+404.html       a tiny joke
 ```
 
-## 💡 What Makes This Special
-
-### For a Fellow Developer:
-- References debugging, code reviews, IDE
-- Uses Git commands throughout (init, commit, push, log)
-- Terminal-style interface
-- JSON responses and curl commands
-- Developer humor and culture
-
-### Confession Elements:
-- Acknowledges you just met recently
-- Focuses on genuine connection
-- Mentions her way of talking about code
-- No over-the-top promises
-- Casual, friendly tone
-- "Two devs hanging out" vibe
-
-### Smart Design:
-- Minimal but effective animations
-- Beautiful pink gradient (not stereotypical)
-- Responsive on all devices
-- Fast loading, no dependencies
-- Professional yet romantic
-
-## 🎨 Customization
-
-You can easily customize:
-
-- **Colors**: Edit CSS variables in `style.css`
-- **Text**: Modify content in `script.js` functions
-- **Speed**: Adjust typing speed in `typeText()` function
-- **Fonts**: Change Google Fonts link in `index.html`
-
-## 📱 Getting Her Response
-
-When she says yes:
-- The page will tell her to text/DM you directly
-- No contact form = no privacy issues
-- No worries about random people's info
-- Clean and simple!
-
-You'll know she said yes because she'll reach out to you directly.
-
-**Why no contact form?**
-- Privacy: You don't want random people's numbers
-- Security: Anyone could access a public link
-- Simplicity: She can just text you directly
-- Better: Real conversation starts naturally
-
-## 🎯 Success Tips
-
-1. **Send at the right time** - Not too late, not during work hours
-2. **Follow up** - After she fills the form, reach out within 24 hours
-3. **Be yourself** - The page is fun, but stay genuine when you text
-4. **Plan ahead** - Have a date idea ready when you reach out
-
-## 🛠️ Tech Stack
-
-- HTML5
-- CSS3 (Animations, Gradients, Flexbox)
-- Vanilla JavaScript (ES6+)
-- Google Fonts (JetBrains Mono, Crimson Pro)
-
-## 📄 License
-
-Free to use! Make it your own and good luck! 🍀
-
-## 💬 Support
-
-If you have questions or need help deploying, feel free to reach out.
-
----
-
-**Remember**: Be respectful, genuine, and confident. You got this! 💪
-
-Good luck! 🚀♡
+Be kind, be honest, and good luck. 🫶
