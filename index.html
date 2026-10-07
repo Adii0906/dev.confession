@@ -1,88 +1,190 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" class="no-js">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"/>
-  <title>initializing... ♡</title>
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    /* ----- SIMPLE PINK LANDING PAGE – ONLY INITIALIZING, NO HEART ANIMATIONS ----- */
-    .boot-pink {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #ffd0d6;  /* soft, clean pink */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
-      padding: 20px;
-    }
-    .boot-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      text-align: center;
-      width: 100%;
-    }
-    .boot-text {
-      font-size: clamp(36px, 12vw, 64px);
-      font-weight: 700;
-      font-style: italic;
-      font-family: 'Crimson Pro', serif;
-      color: #8f3b4a;
-      letter-spacing: 4px;
-      line-height: 1.2;
-      word-break: break-word;
-      text-shadow: 2px 2px 0 rgba(255, 220, 240, 0.5);
-    }
-    .boot-dots {
-      font-size: clamp(36px, 12vw, 64px);
-      font-weight: 700;
-      font-style: italic;
-      font-family: 'Crimson Pro', serif;
-      color: #8f3b4a;
-      display: inline-block;
-      letter-spacing: 8px;
-    }
-    .boot-pink.hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>psst… 💌</title>
+  <meta name="description" content="I made you a tiny website. It takes about a minute. Promise.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#fbf6f1">
+  <meta name="color-scheme" content="light">
+
+  <!-- what shows up when the link gets pasted into a chat -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="I made you something 💌">
+  <meta property="og:description" content="It's small. Slightly embarrassing. Please open it 👉👈">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- once it's deployed, point this at your real URL for a pretty link preview:
+  <meta property="og:image" content="https://YOUR-SITE.vercel.app/og-image.jpg"> -->
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..600,0..100&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=DM+Sans:opsz,wght@9..40,400..600&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <script src="script.js" defer></script>
 </head>
-<body>
+<body data-scene="hook">
+  <!--
+    hi. if you're reading the source code, you're either a developer
+    or extremely thorough. either way:
 
-  <!-- 💗 SIMPLE PINK LANDING PAGE – JUST "initializing..." – NO HEARTS, NO EXTRA EMOJIS -->
-  <div id="bootOverlay" class="boot-pink">
-    <div class="boot-content">
-      <span class="boot-text">initializing</span>
-      <span class="boot-dots">...</span>
+      status: nervous
+      confidence: 12%
+      feelings: definitely not zero
+  -->
+
+  <div class="backdrop" aria-hidden="true">
+    <div class="blob blob--a"></div>
+    <div class="blob blob--b"></div>
+    <div class="blob blob--c"></div>
+    <div class="glow glow--warm"></div>
+    <div class="glow glow--golden"></div>
+    <div class="glow glow--calm"></div>
+    <div class="floaters">
+      <i style="--x: 8%;  --s: 12px; --d: 26s; --delay: -4s;  --o: .45"></i>
+      <i style="--x: 22%; --s: 8px;  --d: 31s; --delay: -19s; --o: .35"></i>
+      <i style="--x: 41%; --s: 14px; --d: 34s; --delay: -11s; --o: .3"></i>
+      <i style="--x: 63%; --s: 9px;  --d: 28s; --delay: -24s; --o: .4"></i>
+      <i style="--x: 78%; --s: 16px; --d: 37s; --delay: -7s;  --o: .3"></i>
+      <i style="--x: 91%; --s: 10px; --d: 29s; --delay: -16s; --o: .4"></i>
     </div>
+    <div class="grain"></div>
   </div>
 
-  <!-- 🖥️ MAIN CONFESSION TERMINAL -->
-  <div class="container" id="mainContainer">
-    <div class="window-header">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="window-title">confession.dev ~ ♡</div>
-    </div>
-    <div class="terminal">
-      <div class="output" id="output"></div>
-      <div class="buttons" id="buttons"></div>
-    </div>
-  </div>
+  <div class="loader" aria-hidden="true"></div>
 
-  <div class="heart-container" id="heartContainer"></div>
+  <main class="stage" id="stage">
 
-  <script src="script.js"></script>
+    <!-- 1 · the hook -->
+    <section class="scene scene--hook" data-scene="hook" tabindex="-1" data-title="psst… 💌" aria-labelledby="t-hook">
+      <p class="eyebrow hand reveal">for <span data-fill="to">you</span> 💌</p>
+      <h1 class="display reveal" id="t-hook">
+        <span class="display__line">So… I made you</span>
+        <span class="display__line"><em class="scribble">a website<svg viewBox="0 0 200 24" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M4 13.5c30-5.5 64-8 98-7 31 .9 60 3.4 94 1.2"/><path pathLength="1" d="M30 19.5c42-3.4 92-4.2 146-1.6"/></svg><span class="sparkle sparkle--1" aria-hidden="true"></span><span class="sparkle sparkle--2" aria-hidden="true"></span></em>.</span>
+      </h1>
+      <p class="lede reveal">In my defense, a text felt way too&nbsp;easy.&nbsp;👉&#8288;👈</p>
+      <div class="actions reveal js-only">
+        <button class="btn btn--primary" type="button" data-go="setup">Okay… I'm curious <span class="emoji">👀</span></button>
+      </div>
+      <p class="aside hand reveal js-only">it takes like a minute, promise</p>
+    </section>
+
+    <!-- 2 · the setup (+ the hold) -->
+    <section class="scene scene--setup" data-scene="setup" tabindex="-1" data-title="okay so… 👉👈" aria-labelledby="t-setup">
+      <p class="eyebrow hand reveal">okay. here's the thing.</p>
+      <h2 class="title reveal" id="t-setup">There's something I've been wanting to tell you.</h2>
+      <p class="lede reveal">Every time I tried, I panicked and talked about the weather instead. <span class="nowrap">☁️</span></p>
+      <p class="lede lede--small reveal js-only">So, tiny favour:</p>
+
+      <div class="hold reveal js-only" id="hold">
+        <button class="hold__btn" id="holdBtn" type="button" aria-describedby="holdHint">
+          <svg class="hold__ring" viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="hold__track" cx="60" cy="60" r="56" />
+            <circle class="hold__fill" cx="60" cy="60" r="56" pathLength="100" />
+          </svg>
+          <svg class="hold__heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5c-.3 0-.6-.1-.8-.3C7.6 17.3 3 13.6 3 9.1 3 6.3 5.1 4 7.8 4c1.7 0 3.2.9 4.2 2.3C13 4.9 14.5 4 16.2 4 18.9 4 21 6.3 21 9.1c0 4.5-4.6 8.2-8.2 11.1-.2.2-.5.3-.8.3z"/></svg>
+          <span class="sr-only">Hold to give me courage</span>
+        </button>
+        <p class="hold__hint" id="holdHint">hold the heart so I don't chicken&nbsp;out&nbsp;👉&#8288;👈</p>
+        <p class="hold__meter mono" aria-hidden="true">confidence: <span id="meter">12</span>%</p>
+      </div>
+
+      <p class="nojs-note">(this part was supposed to be interactive, but JavaScript is off in your browser. so I'll just say it.)</p>
+    </section>
+
+    <!-- 3 · the confession -->
+    <section class="scene scene--confess" data-scene="confess" tabindex="-1" data-title="I like you ❤️" aria-labelledby="t-confess">
+      <p class="eyebrow hand reveal">okay. deep breath.</p>
+      <h2 class="confess reveal" id="t-confess">I like you<span class="confess__dot">.</span></h2>
+      <div class="letter reveal" data-with-next>
+        <p class="reveal">I like talking to you. It never feels like effort, it just feels&nbsp;easy.</p>
+        <p class="reveal">I keep saving random little things to tell you&nbsp;later.</p>
+        <p class="reveal" data-fill="extraLine" hidden></p>
+        <p class="reveal">And somewhere along the way, I started liking you a bit more than I&nbsp;planned&nbsp;to.&nbsp;❤️</p>
+        <p class="letter__aside hand reveal">(okay. said it. heart rate: concerning&nbsp;😭)</p>
+      </div>
+      <div class="actions reveal js-only">
+        <button class="btn btn--primary" type="button" data-go="ask">Okay… and? <span class="emoji">👀</span></button>
+      </div>
+    </section>
+
+    <!-- 4 · the question -->
+    <section class="scene scene--ask" data-scene="ask" tabindex="-1" data-title="so…? 👀" aria-labelledby="t-ask">
+      <p class="eyebrow hand reveal">so, the actual question:</p>
+      <h2 class="title reveal" id="t-ask">Would you want to grab <span data-fill="plan">coffee</span> with me sometime? <span class="nowrap" data-fill="planEmoji">☕</span></h2>
+      <p class="lede reveal">Just us. Low-key. If it gets awkward, we blame the&nbsp;<span data-fill="plan">coffee</span>.</p>
+      <div class="choices reveal js-only">
+        <button class="btn btn--primary" type="button" data-answer="yes">Yes, I'd like that <span class="emoji">❤️</span></button>
+        <button class="btn btn--ghost" type="button" data-answer="maybe">Hmm… let me think <span class="emoji">👀</span></button>
+        <button class="btn btn--ghost" type="button" data-answer="no">I don't think so</button>
+      </div>
+      <p class="fine reveal">Whatever you pick is completely okay&nbsp;🫶<br>This site can't see your answer. It stays with you unless you decide to tell&nbsp;me.</p>
+    </section>
+
+    <!-- 5a · yes -->
+    <section class="scene scene--yes js-only" data-scene="yes" tabindex="-1" data-title="it's a date ☕" aria-labelledby="t-yes">
+      <p class="eyebrow hand reveal">wait. really?? 🥹</p>
+      <h2 class="title reveal" id="t-yes">Okay. Be cool. Be&nbsp;cool.</h2>
+      <p class="lede reveal">(I'm not being cool. You just made my whole&nbsp;week.)</p>
+
+      <div class="ticket-wrap reveal">
+        <div class="ticket">
+          <div class="ticket__main">
+            <p class="ticket__top">admit one · no. 001</p>
+            <p class="ticket__title">one <span data-fill="plan">coffee</span> <span class="nowrap">date <span data-fill="planEmoji">☕</span></span></p>
+            <dl class="ticket__rows">
+              <div><dt>with</dt><dd><span data-fill="from">me</span> (trying to act normal)</dd></div>
+              <div><dt>when</dt><dd>you pick</dd></div>
+              <div><dt>where</dt><dd>you pick that too</dd></div>
+              <div><dt>dress code</dt><dd>whatever's comfy</dd></div>
+            </dl>
+          </div>
+          <p class="ticket__stub">non-refundable (kidding)</p>
+        </div>
+        <span class="stamp" aria-hidden="true">it's a<br>date</span>
+      </div>
+
+      <p class="lede reveal">One problem: this website can't tell me what you clicked. So send me a <span data-fill="planEmoji">☕</span> and I'll take it from&nbsp;there.</p>
+      <div class="actions reveal" data-needs="replyLink" hidden>
+        <a class="btn btn--primary" id="replyLink" href="#" target="_blank" rel="noopener">Send the <span data-fill="planEmoji">☕</span></a>
+      </div>
+      <button class="link reveal" type="button" data-restart>watch it again ↺</button>
+    </section>
+
+    <!-- 5b · maybe -->
+    <section class="scene scene--maybe js-only" data-scene="maybe" tabindex="-1" data-title="no rush 🫶" aria-labelledby="t-maybe">
+      <p class="eyebrow hand reveal">no rush 😌</p>
+      <h2 class="title reveal" id="t-maybe">Totally fair. Take your&nbsp;time.</h2>
+      <p class="lede reveal">There's no timer on this. Think about it, or don't. Both are fine.</p>
+      <p class="lede reveal">Whenever you know, you know where to find me. And if it turns into "let's just be friends," that's a real answer too.&nbsp;🫶</p>
+      <p class="fine reveal">(again, this site doesn't tell me what you picked. zero pressure from this end.)</p>
+      <button class="link reveal" type="button" data-restart>watch it again ↺</button>
+    </section>
+
+    <!-- 5c · no -->
+    <section class="scene scene--no js-only" data-scene="no" tabindex="-1" data-title="thank you 🫶" aria-labelledby="t-no">
+      <p class="eyebrow hand reveal">okay okay 😌</p>
+      <h2 class="title reveal" id="t-no">Fair enough. Thank you for being&nbsp;honest.</h2>
+      <p class="lede reveal">Seriously, that takes more guts than making a website.</p>
+      <p class="lede reveal">Nothing changes, and it won't be weird. I promise. I just didn't want to spend forever wondering "what&nbsp;if."</p>
+      <p class="fine reveal">You don't owe me a reply, by the way. This site doesn't tell me what you picked, so this stays between you and your&nbsp;screen.</p>
+      <p class="signoff hand reveal">still really glad you made it this far 🫶</p>
+      <button class="link reveal" type="button" data-restart>watch it again ↺</button>
+    </section>
+
+    <noscript>
+      <p class="nojs-end">If it's a yes, send me a ☕<br>If it's a no, that's genuinely okay. No reply needed 🫶</p>
+    </noscript>
+  </main>
+
+  <footer class="footer">
+    <p>made with <button class="egg" id="egg" type="button" aria-expanded="false" aria-controls="eggNote" aria-label="psst, a secret">♥</button> and way too much overthinking</p>
+    <pre class="egg-note" id="eggNote" hidden></pre>
+  </footer>
+
+  <div class="fx" id="fx" aria-hidden="true"></div>
 </body>
 </html>
