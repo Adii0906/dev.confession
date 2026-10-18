@@ -10,8 +10,9 @@ Plain HTML, CSS and JavaScript. No frameworks, no build step, no tracking.
 1. **The hook.** *"So… I made you a website."* One button: *Okay… I'm curious 👀*
 2. **The setup.** He admits he's been trying to say something. Then he asks a favour: **hold the heart so I don't chicken out**. While she holds it, his "confidence" meter climbs and the page slowly blushes. If she lets go too early, it drains and he panics a little.
 3. **The confession.** *"I like you."*, then a short, honest note, revealed line by line. Tap to skip ahead.
-4. **The question.** Coffee, sometime? There are three answers, all the same size: **Yes**, **Let me think**, **I don't think so**.
-5. **The ending.**
+4. **The thoughts.** She taps *"Wait… since when?"* and gets a little deck of cute "thoughts I never said out loud", each with an emoji sticker. She taps or swipes through them like notes. The last card admits there are way more.
+5. **The question.** Coffee, sometime? There are three answers, all the same size: **Yes**, **Let me think**, **I don't think so**.
+6. **The ending.**
    - **Yes:** little hearts fly up and gather into one big heart, it beats once, and she gets a date "ticket" stamped *it's a date*.
    - **Maybe:** no rush, no timer.
    - **No:** the page calms to lavender. It thanks her for being honest and tells her she doesn't owe a reply.
@@ -30,8 +31,21 @@ const CONFIG = {
   planEmoji: "☕",
   extraLine: "",   // one line only you could write
   replyLink: "",   // optional one-tap reply link (WhatsApp, Instagram DM…)
+  thoughts: [],    // your own cards for the thoughts deck (see below)
 };
 ```
+
+`thoughts` replaces the default cards with your own. Each one is either a plain string or `[emoji, text]`:
+
+```js
+thoughts: [
+  ["🍜", "You get way too excited about food and it's adorable."],
+  ["🎧", "That song you sent me is now stuck in my head. Permanently."],
+  "You're the reason I check my phone way too much.",
+],
+```
+
+Four to six short ones works best. Real, specific memories beat generic compliments every time.
 
 `extraLine` is what makes it feel like it was written for *her*, so take a minute on it. Keep it specific and light, e.g. `"Also, your laugh is honestly unfair."`.
 
@@ -59,7 +73,7 @@ Any static host works.
 
 ## Little details
 
-- Works with touch, mouse or keyboard. Hold **Space/Enter** on the heart. Tapping fast also works, so nobody gets stuck.
+- Works with touch, mouse or keyboard. Hold **Space/Enter** on the heart. Tapping fast also works, so nobody gets stuck. The thought cards take a tap, a swipe, or **Enter/arrow keys**.
 - Respects **reduced motion**: same story, no floating or flying things.
 - Still readable with **JavaScript off**: it shows the whole thing as a simple letter.
 - `noindex`, so it won't show up in search results.
@@ -68,7 +82,7 @@ Any static host works.
 <details>
 <summary>Easter eggs (spoilers)</summary>
 
-- Tap the ♥ in the footer. It shows a different dev joke on every screen (`git commit -m "finally told her"`, `git stash`, `exit 0`…).
+- Tap the ♥ in the footer. It shows a different dev joke on every screen (`git commit -m "finally told her"`, `wc -l thoughts.txt`, `git stash`, `exit 0`…).
 - Switch tabs mid-story and check the tab title.
 - Let go of the heart early a few times. You'll get `404: courage not found`.
 - Open devtools, or view the page source.
@@ -81,7 +95,7 @@ Any static host works.
 ```
 index.html     the story (every screen is right there in the HTML)
 style.css      the look + all the CSS animations
-script.js      scene flow, the hold-the-heart bit, the heart animation
+script.js      scene flow, the hold-the-heart bit, the thoughts deck, the heart animation
 favicon.svg
 og-image.jpg   link preview card
 404.html       a tiny joke

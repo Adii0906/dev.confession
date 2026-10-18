@@ -11,6 +11,8 @@ const CONFIG = {
   planEmoji: "☕",
   extraLine: "",         // one line only you could write, e.g. "Also, your laugh is honestly unfair."
   replyLink: "",         // optional one-tap reply, e.g. "https://wa.me/91XXXXXXXXXX?text=%E2%98%95" or your instagram DM link
+  thoughts: [],          // your own little thoughts for the card deck, e.g. ["🍜", "You get way too excited about food and it's adorable."]
+                         // (a plain string works too). leave empty to keep the defaults in index.html
 };
 
 /* ---------- tiny helpers ---------- */
@@ -75,6 +77,7 @@ function enter(name, { focus = true } = {}) {
   if (focus) scene.focus({ preventScroll: true });
   egg.refresh();
   if (name === "setup") hold.reset();
+  if (name === "thoughts") deck.reset();
 }
 
 async function go(name, { until } = {}) {
@@ -383,6 +386,167 @@ const hold = (() => {
   return { reset };
 })();
 
+/* ---------- the thoughts deck: tap or swipe through ---------- */
+
+const deck = (() => {
+  const list = $("#deck");
+  const hint = $("#deckHint");
+  const next = $("#deckNext");
+  const end = $(".thought--end", list);
+  const STICKERS = ["💭", "🎧", "😂", "🌙", "☁️", "🎬", "🍜", "✨"];
+
+  // swap in custom thoughts from CONFIG, if there are any
+  if (Array.isArray(CONFIG.thoughts) && CONFIG.thoughts.length) {
+    $$(".thought:not(.thought--end)", list).forEach((el) => el.remove());
+    CONFIG.thoughts.forEach((item, i) => {
+      const [emoji, text] = Array.isArray(item) ? item : [STICKERS[i % STICKERS.length], item];
+      const li = document.createElement("li");
+      li.className = "thought";
+      const sticker = document.createElement("span");
+      sticker.className = "sticker";
+      sticker.setAttribute("aria-hidden", "true");
+      sticker.textContent = emoji;
+      const p = document.createElement("p");
+      p.textContent = text;
+      li.append(sticker, p);
+      list.insertBefore(li, end);
+    });
+  }
+
+  const cards = $$(".thought:not(.thought--end)", list);
+  let index = 0;
+  let drag = null;
+  let draggedAt = 0;
+
+  cards.forEach((card, i) => {
+    const label = document.createElement("span");
+    label.className = "thought__label";
+    label.textContent = `thought ${i + 1} of ${cards.length}`;
+    card.prepend(label);
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-roledescription", "card");
+  });
+
+  function layout() {
+    [...cards, end].forEach((card, i) => {
+      const k = i - index;
+      if (k < 0) return;
+      card.style.setProperty("--k", Math.min(k, 3));
+      card.style.zIndex = 50 - k;
+      card.classList.toggle("is-top", k === 0);
+      card.classList.toggle("is-deep", k > 3);
+      card.tabIndex = k === 0 && card !== end ? 0 : -1;
+      card.setAttribute("aria-hidden", String(k !== 0));
+    });
+    const after = cards.length - index - 1; // cards still waiting behind this one
+    hint.textContent =
+      index === 0
+        ? "tap the card (or swipe it)\u00a0👆"
+        : after > 1
+          ? `${after} more…`
+          : after === 1
+            ? "one more…"
+            : "last one 🫣";
+  }
+
+  function advance(dir = 1) {
+    const card = cards[index];
+    if (!card) return;
+    list.classList.remove("is-fresh");
+    const hadFocus = document.activeElement === card;
+    card.style.setProperty("--fly-x", dir > 0 ? "150%" : "-150%");
+    card.style.setProperty("--fly-r", `${dir * 26}deg`);
+    card.classList.remove("is-top", "is-dragging");
+    card.classList.add("is-gone");
+    card.tabIndex = -1;
+    index++;
+    layout();
+
+    if (index >= cards.length) {
+      hint.hidden = true;
+      next.hidden = false;
+      next.style.setProperty("--i", 0);
+      setTimeout(() => burst(end, 7, 60), 250);
+      // (wait for the button to fade in; hidden things can't take focus)
+      if (hadFocus) setTimeout(() => $("button", next).focus({ preventScroll: true }), 200);
+    } else if (hadFocus) {
+      cards[index].focus({ preventScroll: true });
+    }
+  }
+
+  function reset() {
+    index = 0;
+    drag = null;
+    cards.forEach((card) => {
+      card.classList.remove("is-gone", "is-dragging");
+      card.style.transform = "";
+    });
+    list.classList.add("is-fresh");
+    hint.hidden = false;
+    next.hidden = true;
+    layout();
+  }
+
+  list.addEventListener("pointerdown", (e) => {
+    const card = e.target.closest(".thought.is-top");
+    if (!card || card === end || e.button !== 0) return;
+    drag = { card, id: e.pointerId, x: e.clientX, y: e.clientY, dx: 0, moved: false };
+    card.setPointerCapture?.(e.pointerId);
+  });
+
+  list.addEventListener("pointermove", (e) => {
+    if (!drag || e.pointerId !== drag.id) return;
+    drag.dx = e.clientX - drag.x;
+    const dy = e.clientY - drag.y;
+    if (!drag.moved && Math.abs(drag.dx) < 6) return;
+    if (!drag.moved && Math.abs(dy) > Math.abs(drag.dx)) {
+      drag = null; // they're scrolling, not swiping
+      return;
+    }
+    drag.moved = true;
+    drag.card.classList.add("is-dragging");
+    drag.card.style.transform = `translate(${drag.dx}px, ${dy * 0.15}px) rotate(${drag.dx / 14}deg)`;
+  });
+
+  const endDrag = (e) => {
+    if (!drag || (e.pointerId !== undefined && e.pointerId !== drag.id)) return;
+    const { card, dx, moved } = drag;
+    drag = null;
+    card.classList.remove("is-dragging");
+    if (!moved) return; // a plain tap is handled by "click"
+    draggedAt = performance.now();
+    if (Math.abs(dx) > 70) {
+      advance(dx > 0 ? 1 : -1);
+    } else {
+      card.style.transform = "";
+    }
+  };
+  list.addEventListener("pointerup", endDrag);
+  list.addEventListener("pointercancel", endDrag);
+
+  list.addEventListener("click", (e) => {
+    const card = e.target.closest(".thought.is-top");
+    if (!card || card === end) return;
+    if (performance.now() - draggedAt < 350) return; // that was a swipe, not a tap
+    advance(1);
+  });
+
+  list.addEventListener("keydown", (e) => {
+    const card = e.target.closest(".thought.is-top");
+    if (!card || card === end) return;
+    if (e.key === "Enter" || e.key === " " || e.key === "ArrowRight") {
+      e.preventDefault();
+      advance(1);
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      advance(-1);
+    }
+  });
+
+  layout();
+  return { reset };
+})();
+
 /* ---------- the little secret in the footer ---------- */
 
 const egg = (() => {
@@ -392,6 +556,7 @@ const egg = (() => {
     hook: "status: nervous\nconfidence: 12%\nfeelings: definitely not zero",
     setup: "status: nervous\nconfidence: 12%\nfeelings: definitely not zero",
     confess: '$ git commit -m "finally told her"\n 1 file changed, 1 feeling inserted(+)',
+    thoughts: `$ wc -l thoughts.txt\n${$$(".thought:not(.thought--end)").length}   (out of roughly 400)`,
     ask: "$ git status\nwaiting for a response…\n(no pressure. really.)",
     yes: "$ git push origin coffee-date\n✓ done. zero merge conflicts ❤️",
     maybe: "$ git stash\nsaved for later. no rush.",

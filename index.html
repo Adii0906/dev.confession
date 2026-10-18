@@ -60,7 +60,7 @@
 
     <!-- 1 · the hook -->
     <section class="scene scene--hook" data-scene="hook" tabindex="-1" data-title="psst… 💌" aria-labelledby="t-hook">
-      <p class="eyebrow hand reveal">for <span data-fill="to">you</span> 💌</p>
+      <p class="eyebrow hand reveal">for <span data-fill="to">you</span> <span class="sticker sticker--inline" aria-hidden="true">💌</span></p>
       <h1 class="display reveal" id="t-hook">
         <span class="display__line">So… I made you</span>
         <span class="display__line"><em class="scribble">a website<svg viewBox="0 0 200 24" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M4 13.5c30-5.5 64-8 98-7 31 .9 60 3.4 94 1.2"/><path pathLength="1" d="M30 19.5c42-3.4 92-4.2 146-1.6"/></svg><span class="sparkle sparkle--1" aria-hidden="true"></span><span class="sparkle sparkle--2" aria-hidden="true"></span></em>.</span>
@@ -69,7 +69,7 @@
       <div class="actions reveal js-only">
         <button class="btn btn--primary" type="button" data-go="setup">Okay… I'm curious <span class="emoji">👀</span></button>
       </div>
-      <p class="aside hand reveal js-only">it takes like a minute, promise</p>
+      <p class="aside hand reveal js-only">two minutes, tops. promise.</p>
     </section>
 
     <!-- 2 · the setup (+ the hold) -->
@@ -107,11 +107,30 @@
         <p class="letter__aside hand reveal">(okay. said it. heart rate: concerning&nbsp;😭)</p>
       </div>
       <div class="actions reveal js-only">
+        <button class="btn btn--primary" type="button" data-go="thoughts">Wait… since when? <span class="emoji">👀</span></button>
+      </div>
+    </section>
+
+    <!-- 4 · the thoughts (a little deck she flips through) -->
+    <section class="scene scene--thoughts" data-scene="thoughts" tabindex="-1" data-title="thoughts 💭" aria-labelledby="t-thoughts">
+      <p class="eyebrow hand reveal">since when? no clue. but here's evidence:</p>
+      <h2 class="title reveal" id="t-thoughts">Thoughts I never said out&nbsp;loud&nbsp;💭</h2>
+      <ol class="deck reveal" id="deck">
+        <li class="thought"><span class="sticker" aria-hidden="true">📱</span><p>When your name pops up on my phone, I act completely normal about&nbsp;it.</p><p class="thought__aside">(I do not.)</p></li>
+        <li class="thought"><span class="sticker" aria-hidden="true">🎧</span><p>Every song I like now comes with a little "she'd like this" attached.</p></li>
+        <li class="thought"><span class="sticker" aria-hidden="true">😂</span><p>Your laugh is unfair. I'd tell a bad joke on purpose just to hear&nbsp;it.</p></li>
+        <li class="thought"><span class="sticker" aria-hidden="true">🌙</span><p>I've replayed some of our conversations at 2am.</p><p class="thought__aside">totally normal behaviour, I'm told.</p></li>
+        <li class="thought"><span class="sticker" aria-hidden="true">☁️</span><p>Boring days get noticeably less boring when you're in&nbsp;them.</p></li>
+        <li class="thought"><span class="sticker" aria-hidden="true">🎬</span><p>I rehearsed this way too many times. In one version you just laughed and walked&nbsp;off.</p><p class="thought__aside">honestly? fair.</p></li>
+        <li class="thought thought--end"><p>okay, that's all of them.</p><p class="thought__aside">(it's not. there are way more.) 🫶</p></li>
+      </ol>
+      <p class="deck__hint hand reveal js-only" id="deckHint">tap the card (or swipe it)&nbsp;👆</p>
+      <div class="actions reveal js-only deck__next" id="deckNext" hidden>
         <button class="btn btn--primary" type="button" data-go="ask">Okay… and? <span class="emoji">👀</span></button>
       </div>
     </section>
 
-    <!-- 4 · the question -->
+    <!-- 5 · the question -->
     <section class="scene scene--ask" data-scene="ask" tabindex="-1" data-title="so…? 👀" aria-labelledby="t-ask">
       <p class="eyebrow hand reveal">so, the actual question:</p>
       <h2 class="title reveal" id="t-ask">Would you want to grab <span data-fill="plan">coffee</span> with me sometime? <span class="nowrap" data-fill="planEmoji">☕</span></h2>
@@ -124,7 +143,7 @@
       <p class="fine reveal">Whatever you pick is completely okay&nbsp;🫶<br>This site can't see your answer. It stays with you unless you decide to tell&nbsp;me.</p>
     </section>
 
-    <!-- 5a · yes -->
+    <!-- 6a · yes -->
     <section class="scene scene--yes js-only" data-scene="yes" tabindex="-1" data-title="it's a date ☕" aria-labelledby="t-yes">
       <p class="eyebrow hand reveal">wait. really?? 🥹</p>
       <h2 class="title reveal" id="t-yes">Okay. Be cool. Be&nbsp;cool.</h2>
@@ -154,7 +173,7 @@
       <button class="link reveal" type="button" data-restart>watch it again ↺</button>
     </section>
 
-    <!-- 5b · maybe -->
+    <!-- 6b · maybe -->
     <section class="scene scene--maybe js-only" data-scene="maybe" tabindex="-1" data-title="no rush 🫶" aria-labelledby="t-maybe">
       <p class="eyebrow hand reveal">no rush 😌</p>
       <h2 class="title reveal" id="t-maybe">Totally fair. Take your&nbsp;time.</h2>
@@ -164,7 +183,7 @@
       <button class="link reveal" type="button" data-restart>watch it again ↺</button>
     </section>
 
-    <!-- 5c · no -->
+    <!-- 6c · no -->
     <section class="scene scene--no js-only" data-scene="no" tabindex="-1" data-title="thank you 🫶" aria-labelledby="t-no">
       <p class="eyebrow hand reveal">okay okay 😌</p>
       <h2 class="title reveal" id="t-no">Fair enough. Thank you for being&nbsp;honest.</h2>
