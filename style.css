@@ -811,6 +811,226 @@ body[data-scene="maybe"] .glow--calm {
   margin-top: 16px;
 }
 
+/* ---------- stickers (emoji with a white die-cut edge) ---------- */
+
+.sticker {
+  display: inline-block;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  font-style: normal;
+  line-height: 1;
+  filter:
+    drop-shadow(1.6px 0 0 #fff)
+    drop-shadow(-1.6px 0 0 #fff)
+    drop-shadow(0 1.6px 0 #fff)
+    drop-shadow(0 -1.6px 0 #fff)
+    drop-shadow(0 4px 6px rgba(79, 26, 44, 0.22));
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.sticker--inline {
+  margin-left: 2px;
+  font-size: 1.15em;
+  vertical-align: -0.12em;
+  transform: rotate(10deg);
+}
+
+.js .is-current .sticker--inline {
+  animation: slap 0.5s cubic-bezier(0.5, 0, 0.3, 1.5) 0.75s both;
+}
+
+@keyframes slap {
+  from {
+    opacity: 0;
+    transform: rotate(-20deg) scale(2.2);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(10deg) scale(1);
+  }
+}
+
+/* ---------- the thoughts deck ---------- */
+
+.deck {
+  max-width: 310px;
+  margin: 30px auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+.thought {
+  --card: var(--paper);
+  --tilt: -1.5deg;
+  position: relative;
+  padding: 22px 22px 24px;
+  border-radius: 20px;
+  background: var(--card);
+  box-shadow:
+    0 18px 36px -24px rgba(79, 26, 44, 0.5),
+    inset 0 0 0 1px rgba(123, 45, 69, 0.07);
+  text-align: left;
+}
+
+.thought:nth-child(4n + 2) { --card: #fbe4e6; --tilt: 2deg; }
+.thought:nth-child(4n + 3) { --card: #ece6fa; --tilt: -2.5deg; }
+.thought:nth-child(4n + 4) { --card: #fdeadb; --tilt: 1.5deg; }
+
+.thought + .thought {
+  margin-top: 26px;
+}
+
+.thought__label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rose-deep);
+}
+
+.thought p {
+  font-family: var(--serif);
+  font-variation-settings: "SOFT" 100;
+  font-size: clamp(1.22rem, 5.4vw, 1.42rem);
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.thought p.thought__aside {
+  margin-top: 10px;
+  font-family: var(--hand);
+  font-size: 1.3rem;
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: var(--ink-soft);
+}
+
+.thought .sticker {
+  position: absolute;
+  top: -16px;
+  right: -8px;
+  font-size: 2.3rem;
+  transform: rotate(12deg);
+}
+
+.thought:nth-child(even) .sticker {
+  transform: rotate(-10deg);
+}
+
+.thought--end {
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+
+.thought--end p {
+  font-style: italic;
+  color: var(--wine);
+}
+
+/* with JS: a stack you flip through */
+
+.js .deck {
+  display: grid;
+  margin-top: 34px;
+  padding-bottom: 24px;
+}
+
+.js .thought {
+  grid-area: 1 / 1;
+  margin: 0;
+  min-height: 210px;
+  transform-origin: 50% 100%;
+  transform:
+    translateY(calc(var(--k, 0) * 10px))
+    scale(calc(1 - var(--k, 0) * 0.045))
+    rotate(var(--tilt));
+  transition:
+    transform 0.55s var(--ease-spring),
+    opacity 0.4s ease;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.js .thought:not(.thought--end) {
+  cursor: grab;
+}
+
+.js .thought.is-deep {
+  opacity: 0;
+}
+
+.js .thought:not(.is-top) {
+  pointer-events: none;
+}
+
+.js .thought:not(.is-top) > * {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.js .thought.is-top > * {
+  opacity: 1;
+  transition: opacity 0.35s ease 0.1s;
+}
+
+.js .thought.is-gone > * {
+  opacity: 1;
+  transition: none;
+}
+
+.js .thought.is-dragging {
+  cursor: grabbing;
+  transition: none;
+}
+
+.js .thought.is-gone {
+  pointer-events: none;
+  animation: fly-off 0.6s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+@keyframes fly-off {
+  to {
+    opacity: 0;
+    transform: translate(var(--fly-x, 140%), -40px) rotate(var(--fly-r, 24deg));
+    visibility: hidden;
+  }
+}
+
+.js .deck.is-fresh .thought.is-top {
+  animation: card-nudge 3.2s ease-in-out 2.2s infinite;
+}
+
+@keyframes card-nudge {
+  0%, 78%, 100% { translate: 0 0; rotate: 0deg; }
+  84% { translate: 10px -2px; rotate: 2.5deg; }
+  90% { translate: -4px 0; rotate: -1deg; }
+  95% { translate: 2px 0; rotate: 0.5deg; }
+}
+
+.deck__hint {
+  min-height: 1.4em;
+  margin-top: 8px;
+  font-size: 1.3rem;
+  line-height: 1.2;
+  color: var(--wine);
+}
+
+.deck__next {
+  margin-top: 18px;
+}
+
+.deck__hint[hidden],
+.deck__next[hidden] {
+  display: none;
+}
+
 /* ---------- yes: the ticket ---------- */
 
 .ticket-wrap {
@@ -1195,8 +1415,19 @@ body[data-scene="maybe"] .glow--calm {
   }
 
   .js .is-current .scribble path,
-  .js .is-current .stamp {
+  .js .is-current .stamp,
+  .js .is-current .sticker--inline,
+  .js .deck.is-fresh .thought.is-top {
     animation: none;
+  }
+
+  .js .thought {
+    transition: opacity 0.2s linear;
+  }
+
+  .js .thought.is-gone {
+    animation: fade-out 0.2s linear forwards;
+    visibility: hidden;
   }
 
   .btn,
